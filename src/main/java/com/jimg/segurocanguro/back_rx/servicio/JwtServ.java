@@ -21,10 +21,9 @@ public class JwtServ {
 		this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 	}
 	
-	public String crearToken(String usuario, String nombre) {
+	public String crearToken(String usuario) {
 		return Jwts.builder()
 			.setSubject(usuario)
-			.claim("nombre", nombre)
 				.signWith(this.key)
 					.compact(); 
 	}
@@ -47,7 +46,6 @@ public class JwtServ {
 								.setSigningKey(this.key)
 								.parseClaimsJws(jwt);
 			Usuario usuario = new Usuario();
-			usuario.setNombre((String) jws.getBody().get("nombre"));
 			usuario.setUsuario(jws.getBody().getSubject());
 			return usuario;
 		    
